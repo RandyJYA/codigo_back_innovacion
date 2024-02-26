@@ -24,9 +24,9 @@
 
         <!-- correo  -->
         <div class="mt-4">
-            <x-input-label for="correo" :value="__('Correo')" />
-            <x-text-input id="correo" class="block mt-1 w-full" type="email" name="correo" :value="old('correo')" required autocomplete="correo" />
-            <x-input-error :messages="$errors->get('correo')" class="mt-2" />
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="email" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
     <!-- Fecha  -->
         <div class="mt-4">
@@ -37,25 +37,25 @@
 
         <!-- contrasenia -->
         <div class="mt-4">
-            <x-input-label for="contrasenia" :value="__('Contrasenia')" />
+            <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="contrasenia" class="block mt-1 w-full"
+            <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
-                            name="contrasenia"
-                            required autocomplete="new-contrasenia" />
+                            name="password"
+                            required autocomplete="new-password" />
 
-            <x-input-error :messages="$errors->get('contrasenia')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm contrasenia -->
         <div class="mt-4">
-            <x-input-label for="contrasenia_confirmation" :value="__('Confirm contrasenia')" />
+            <x-input-label for="password_confirmation" :value="__('Confirm password')" />
 
-            <x-text-input id="contrasenia_confirmation" class="block mt-1 w-full"
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
-                            name="contrasenia_confirmation" required autocomplete="new-contrasenia" />
+                            name="password_confirmation" required autocomplete="new-password" />
 
-            <x-input-error :messages="$errors->get('contrasenia_confirmation')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
