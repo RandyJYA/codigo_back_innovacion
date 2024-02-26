@@ -17,4 +17,8 @@ class CategoriaTrabajo extends Model{
         'curso',
         'descripcion',
     ];
+
+    public function trabajos(){
+        return $this->hasMany(Trabajo::class, 'id_categoriaT');
+    }
 }

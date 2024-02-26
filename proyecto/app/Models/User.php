@@ -49,4 +49,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function puntosInteres(){
+        return $this->belongsToMany(PuntoInteres::class, 'visita', 'id_usuario', 'id_punto_interes');
+    }
+
+    public function rutas(){
+        return $this->belongsToMany(Ruta::class, 'realiza', 'id_usuario', 'id_ruta');
+    }
 }

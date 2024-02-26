@@ -17,4 +17,8 @@ class Respuesta extends Model{
         'texto',
         'correcta'
     ];
+
+    public function pregunta(){
+        return $this->belongsTo(Pregunta::class, 'id_pregunta');
+    }
 }

@@ -15,4 +15,8 @@ class CategoriaPunto extends Model{
     protected $fillable = [
         'nombre'
     ];
+
+    public function puntosInteres(){
+        return $this->hasMany(PuntoInteres::class, 'id_categoriaP');
+    }
 }

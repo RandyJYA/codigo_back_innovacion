@@ -16,4 +16,12 @@ class Pregunta extends Model{
         'enunciado',
         'id_trabajo'
     ];
+
+    public function respuestas(){
+        return $this->hasMany(Respuesta::class, 'id_pregunta');
+    }
+
+    public function trabajo(){
+        return $this->belongsTo(Trabajo::class, 'id_trabajo');
+    }
 }

@@ -22,4 +22,16 @@ class Trabajo extends Model{
         'id_punto_interes',
         'id_categoriaT'
     ];
+
+    public function preguntas(){
+        return $this->hasMany(Pregunta::class, 'id_trabajo');
+    }
+
+    public function categoriaTrabajo(){
+        return $this->belongsTo(CategoriaTrabajo::class, 'id_categoriaT');
+    }
+
+    public function puntoInteres(){
+        return $this->belongsTo(PuntoInteres::class, 'id_punto_interes');
+    }
 }
