@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\RutaResource;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class RutaController extends Controller
 {
@@ -21,6 +23,16 @@ class RutaController extends Controller
      */
     public function create(){
 
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $datos = $request->all();
+        return new RutaResource(Ruta::create($datos));
     }
 
     /**
@@ -33,24 +45,38 @@ class RutaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function update(Request $request, Ruta $ruta)
     {
-        //
-    }
+        $nombre = $ruta->nombre;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        if($ruta->id_usuario !=  Auth::user()->id_usuario){
+
+            return response()->json(["mensaje "=> "no tienes autorizacion para actualizar la ruta de ".$nombre],200);
+
+        }
+
+        else{
+            $datos = $request->all();
+            $ruta->update($datos);
+            return new RutaResource($ruta);
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request ,Ruta $ruta)
     {
-        //
+        $nombre = $ruta->nombre;
+        if($ruta->id_usuario !=  Auth::user()->id_usuario){
+
+            return response()->json(["mensaje "=> "no tienes autorizacion para borrar ",$nombre],200);
+
+        }
+        else{
+            $ruta->delete();
+            return response()->json(["mensaje "=> "Se ha borrado la ruta de ".$nombre],200);
+        }
     }
 }
