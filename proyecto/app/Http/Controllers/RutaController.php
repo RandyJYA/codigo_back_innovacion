@@ -78,4 +78,8 @@ class RutaController extends Controller
     public function misRutas(Request $request){
         return $request->user()->rutasCreadas;
     }
+
+    public function puntosRuta(Ruta $ruta){
+        return $ruta->puntosInteres;
+    }
 }

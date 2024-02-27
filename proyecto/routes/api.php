@@ -20,8 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('rutas', [RutaController::class, 'index']);
+Route::get('rutas/{ruta}/puntosInteres', [RutaController::class, 'puntosRuta']);
+
 Route::middleware(['auth:sanctum'])->group(function (){
-    Route::get('rutas', [RutaController::class, 'index']);
     Route::get('rutas/misRutas', [RutaController::class, 'misRutas']);
     Route::get('rutas/{ruta}', [RutaController::class, 'show']);
     Route::post('rutas', [RutaController::class, 'store']);
