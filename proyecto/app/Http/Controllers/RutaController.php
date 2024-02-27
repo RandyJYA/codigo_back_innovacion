@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RutaResource;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
 
@@ -23,19 +24,10 @@ class RutaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(Ruta $ruta){
+        return new RutaResource($ruta);
     }
 
     /**

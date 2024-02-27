@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RutaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware(['auth:sanctum'])->group(function (){
+    Route::get('rutas/{ruta}', [RutaController::class, 'show']);
+    Route::post('rutas', [RutaController::class, 'store']);
+    Route::put('rutas/{ruta}', [RutaController::class, 'update']);
+    Route::delete('rutas/{ruta}', [RutaController::class, 'delete']);
 });
