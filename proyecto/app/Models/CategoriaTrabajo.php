@@ -19,6 +19,6 @@ class CategoriaTrabajo extends Model{
     ];
 
     public function trabajos(){
-        return $this->hasMany(Trabajo::class, 'id_categoriaT');
+        return $this->belongsToMany(Ruta::class, 'clasifica_trabajos', 'id_categoriaT', 'id_trabajo');
     }
 }
