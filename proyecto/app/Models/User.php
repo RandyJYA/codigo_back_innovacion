@@ -27,7 +27,8 @@ class User extends Authenticatable
         'password',
         'nombre',
         'apellidos',
-        'fecha_nacimiento'
+        'fecha_nacimiento',
+        'verificado',
     ];
 
     /**
