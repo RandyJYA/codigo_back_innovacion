@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function rutas(){
         return $this->belongsToMany(Ruta::class, 'realiza', 'id_usuario', 'id_ruta');
     }
+
+    public function rutasCreadas(){
+        return $this->hasMany(Respuesta::class, 'id_usuario', 'id_usuario');
+    }
 }
