@@ -25,6 +25,8 @@ class RutaController extends Controller
     public function store(Request $request)
     {
         $datos = $request->all();
+        $datos['id_usuario'] = $request->user()->id_usuario;
+
         return new RutaResource(Ruta::create($datos));
     }
 
