@@ -74,4 +74,8 @@ class RutaController extends Controller
             return response()->json(["mensaje "=> "Se ha borrado la ruta de ".$nombre],200);
         }
     }
+
+    public function misRutas(Request $request){
+        return $request->user()->rutasCreadas;
+    }
 }
