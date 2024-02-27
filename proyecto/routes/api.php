@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function (){
+    Route::get('rutas', [RutaController::class, 'index']);
     Route::get('rutas/{ruta}', [RutaController::class, 'show']);
     Route::post('rutas', [RutaController::class, 'store']);
     Route::put('rutas/{ruta}', [RutaController::class, 'update']);
