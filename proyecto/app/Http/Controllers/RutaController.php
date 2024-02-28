@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RutaResource;
+use App\Models\PuntoInteres;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use PharIo\Manifest\Author;
 
 class RutaController extends Controller
 {
@@ -14,9 +16,62 @@ class RutaController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $rutas = Ruta::whereNull('id_usuario')->paginate(5);
+
+        $rutas = Ruta::whereNull('id_usuario')->get();
+
+        $rutas->load("puntosInteres");
+
         return $rutas;
     }
+
+    public function agregarPuntoInteres($id_ruta, $id_punto_interes)
+{
+    $id_usuario = Auth::user()->id_usuario;
+
+    $ruta = Ruta::where('id_ruta', $id_ruta)
+                ->where('id_usuario', $id_usuario)
+                ->first();
+
+    if($ruta) {
+        $puntoInteres = PuntoInteres::findOrFail($id_punto_interes);
+
+        $ruta->puntosInteres()->attach($puntoInteres);
+
+        $nombrePunto = $puntoInteres->nombre;
+        $nombreRuta = $ruta->nombre;
+
+        return response()->json(['message' => "$nombrePunto agregado a tu ruta $nombreRuta"], 200);
+    } else {
+        return response()->json(['message' => 'No se encuentra esta ruta para tu usuario'], 404);
+    }
+}
+public function quitarPuntoInteres($id_ruta, $id_punto_interes)
+{
+    $id_usuario = Auth::user()->id_usuario;
+
+    $ruta = Ruta::where('id_ruta', $id_ruta)
+                ->where('id_usuario', $id_usuario)
+                ->first();
+
+    if($ruta) {
+        $puntoInteres = PuntoInteres::findOrFail($id_punto_interes);
+
+        if ($ruta->puntosInteres->contains($puntoInteres)) {
+            $ruta->puntosInteres()->detach($puntoInteres);
+
+            $nombrePunto = $puntoInteres->nombre;
+            $nombreRuta = $ruta->nombre;
+
+            return response()->json(['message' => "$nombrePunto eliminado de tu ruta $nombreRuta"], 200);
+        } else {
+            return response()->json(['message' => 'El punto de interés no está asociado a esta ruta'], 404);
+        }
+    } else {
+        return response()->json(['message' => 'No se encuentra esta ruta para tu usuario'], 404);
+    }
+}
+
+
 
 
     /**
@@ -34,7 +89,15 @@ class RutaController extends Controller
      * Display the specified resource.
      */
     public function show(Ruta $ruta){
+
+    $id_usuario = Auth::id();
+    $id_ruta = $ruta->id_usuario;
+    if($id_usuario != $id_ruta){
+        return response()->json(['message' => 'No se encuentra esta ruta para tu usuario'], 200);
+    } else{
+
         return new RutaResource($ruta);
+    }
     }
 
     /**

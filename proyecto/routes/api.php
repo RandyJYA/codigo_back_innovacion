@@ -30,6 +30,8 @@ Route::get('puntosInteres', [PuntoInteresController::class, 'index']);
 Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('rutas/misRutas', [RutaController::class, 'misRutas']);
     Route::get('rutas/{ruta}', [RutaController::class, 'show']);
+    Route::post('rutas/{id_ruta}/puntos-interes/{id_punto_interes}', [RutaController::class, 'agregarPuntoInteres']);
+    Route::delete('rutas/{id_ruta}/puntos-interes/{id_punto_interes}', [RutaController::class, 'quitarPuntoInteres']);
     Route::post('rutas', [RutaController::class, 'store']);
     Route::put('rutas/{ruta}', [RutaController::class, 'update']);
     Route::delete('rutas/{ruta}', [RutaController::class, 'delete']);
