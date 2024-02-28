@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\PuntoInteresController;
 use App\Http\Controllers\RutaController;
+use App\Models\PuntoInteres;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('rutas', [RutaController::class, 'index']);
 Route::get('rutas/{ruta}/puntosInteres', [RutaController::class, 'puntosRuta']);
+Route::get('puntosInteres', [PuntoInteresController::class, 'index']);
+
 
 Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('rutas/misRutas', [RutaController::class, 'misRutas']);
