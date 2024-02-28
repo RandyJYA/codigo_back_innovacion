@@ -139,7 +139,12 @@ public function quitarPuntoInteres($id_ruta, $id_punto_interes)
     }
 
     public function misRutas(Request $request){
-        return $request->user()->rutasCreadas;
+        $rutas = Ruta::where('id_usuario', Auth::user()->id_usuario)->get();
+
+        $rutas->load("puntosInteres");
+
+        return $rutas;
+
     }
 
     public function puntosRuta(Ruta $ruta){
