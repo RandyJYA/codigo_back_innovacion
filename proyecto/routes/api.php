@@ -34,5 +34,5 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::delete('rutas/{id_ruta}/puntos-interes/{id_punto_interes}', [RutaController::class, 'quitarPuntoInteres']);
     Route::post('rutas', [RutaController::class, 'store']);
     Route::put('rutas/{ruta}', [RutaController::class, 'update']);
-    Route::delete('rutas/{ruta}', [RutaController::class, 'delete']);
+    Route::delete('rutas/{ruta}', [RutaController::class, 'destroy']);
 });
