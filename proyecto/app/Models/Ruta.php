@@ -19,6 +19,7 @@ class Ruta extends Model{
         'imagen_principal',
         'id_usuario',
         'descripcion',
+        'publica'
     ];
 
     public function puntosInteres(){

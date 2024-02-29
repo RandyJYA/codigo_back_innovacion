@@ -17,7 +17,7 @@ class RutaController extends Controller
      */
     public function index(){
 
-        $rutas = Ruta::whereNull('id_usuario')->get();
+        $rutas = Ruta::where('publica', true)->get();
 
         $rutas->load("puntosInteres");
 

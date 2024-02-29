@@ -20,6 +20,7 @@ class RutaResource extends JsonResource{
             'imagen' => $this->imagen_principal,
             'fecha_creacion'=>$this->fecha_creacion,
             'descripcion'=>$this->descripcion,
+            'publica'=>$this->publica,
         ];
     }
 }
