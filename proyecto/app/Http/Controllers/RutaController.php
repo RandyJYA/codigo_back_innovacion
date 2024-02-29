@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RutaUpdateRequest;
 use App\Http\Resources\RutaResource;
 use App\Models\PuntoInteres;
 use App\Models\Ruta;
@@ -116,7 +117,7 @@ public function quitarPuntoInteres($id_ruta, $id_punto_interes)
         else{
             $datos = $request->all();
             $ruta->update($datos);
-            return new RutaResource($ruta);
+            return new RutaUpdateRequest((array)$ruta);
         }
 
     }
