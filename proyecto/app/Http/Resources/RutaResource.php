@@ -21,6 +21,7 @@ class RutaResource extends JsonResource{
             'fecha_creacion'=>$this->fecha_creacion,
             'descripcion'=>$this->descripcion,
             'publica'=>$this->publica,
+            'ruta_id'=>$this->id_ruta,
         ];
     }
 }
