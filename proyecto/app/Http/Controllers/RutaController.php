@@ -83,7 +83,14 @@ public function quitarPuntoInteres($id_ruta, $id_punto_interes)
         $datos = $request->all();
         $datos['id_usuario'] = $request->user()->id_usuario;
 
-        return new RutaResource(Ruta::create($datos));
+        $ruta = new RutaResource(Ruta::create($datos));
+
+        if ($datos['puntos_interes']) {
+            foreach ($datos['puntos_interes'] as $puntoInteres) {
+                $ruta->puntosInteres()->attach($puntoInteres);
+            }
+        }
+        return $ruta;
     }
 
     public function storeImage(Request $request, Ruta $ruta)
