@@ -86,6 +86,30 @@ public function quitarPuntoInteres($id_ruta, $id_punto_interes)
         return new RutaResource(Ruta::create($datos));
     }
 
+    public function storeImage(Request $request, Ruta $ruta)
+    {
+        $request->validate([
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->imagen->extension();
+
+        $request->imagen->move(public_path('imagenes'), $imageName);
+
+        $imageUrl = url('imagenes/' . $imageName);
+
+        // Verificar si la ruta existe
+        if (!$ruta) {
+            return response()->json(['message' => 'Ruta no encontrada'], 404);
+        }
+
+        // Actualizar el campo de imagen de la ruta
+        $ruta->imagen_principal = $imageUrl;
+        $ruta->save();
+
+        return response()->json(['url' => $imageUrl], 200);
+    }
+
     /**
      * Display the specified resource.
      */

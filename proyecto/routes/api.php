@@ -36,4 +36,5 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::put('rutas/{ruta}', [RutaController::class, 'update']);
     Route::patch('rutas/{ruta}', [RutaController::class, 'update']);
     Route::delete('rutas/{ruta}', [RutaController::class, 'destroy']);
+    Route::post('rutas/{ruta}/imagenes', [RutaController::class, 'storeImage']);
 });
