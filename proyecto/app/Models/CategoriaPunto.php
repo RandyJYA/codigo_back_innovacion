@@ -9,7 +9,7 @@ class CategoriaPunto extends Model{
     use HasFactory;
 
     protected $table = "categorias_puntos";
-    protected $primaryKey = "id_categoraP";
+    protected $primaryKey = "id_categoriaP";
     public $timestamps = false;
 
     protected $fillable = [

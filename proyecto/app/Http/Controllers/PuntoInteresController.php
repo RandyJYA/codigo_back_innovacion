@@ -13,7 +13,7 @@ class PuntoInteresController extends Controller
      */
     public function index()
     {
-        $puntos = PuntoInteres::all();
+        $puntos = PuntoInteres::all()->load(['trabajos', 'categorias']);
         return new PuntoInteresResource($puntos);
     }
 

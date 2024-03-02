@@ -21,7 +21,7 @@ class PuntoInteres extends Model{
     ];
 
     public function categorias(){
-        return $this->belongsToMany(User::class, 'clasifica_puntos', 'id_punto_interes', 'id_categoriaP');
+        return $this->belongsToMany(CategoriaPunto::class, 'clasifica_puntos', 'id_punto_interes', 'id_categoriaP');
     }
 
     public function rutas(){
