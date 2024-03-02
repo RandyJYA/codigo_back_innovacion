@@ -20,7 +20,7 @@ class RutaController extends Controller
 
         $rutas = Ruta::where('publica', true)->get();
 
-        $rutas->load("puntosInteres");
+        $rutas->load(["puntosInteres", "usuario"]);
 
         return $rutas;
     }

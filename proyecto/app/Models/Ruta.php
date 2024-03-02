@@ -30,7 +30,8 @@ class Ruta extends Model{
         return $this->belongsToMany(User::class, 'realiza', 'id_ruta', 'id_usuario');
     }
 
-    public function usuario(){
-        return $this->belongsTo(User::class);
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario')->select(['id_usuario', 'email']);
     }
 }
