@@ -71,4 +71,12 @@ class ProfileController extends Controller
 
         return response()->json(['token' => $token->plainTextToken]);
     }
+
+    public function puntosInteresVisitados(){
+        if(!Auth::user()) return response()->json(['error' => 'No autenticado'], 401);
+
+        $puntosInteres = Auth::user()->puntosInteres;
+
+        return response()->json(['puntosInteres' => $puntosInteres]);
+    }
 }
