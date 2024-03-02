@@ -32,6 +32,6 @@ class Ruta extends Model{
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario')->select(['id_usuario', 'email']);
+        return $this->belongsTo(User::class, 'id_usuario')->select(['id_usuario', 'nombre_usuario']);
     }
 }
