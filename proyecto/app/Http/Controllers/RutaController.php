@@ -16,18 +16,29 @@ class RutaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){
+    public function index(Request $request){
         $rutas = Ruta::where('publica', true)->get();
 
         $rutas->load(["puntosInteres", "usuario"]);
 
         $maxDuration = Ruta::where('publica', true)->max('duracion');
         $minDuration = Ruta::where('publica', true)->min('duracion');
+        if (Auth::check()) {
+            $rutasUsuario = Auth::user()->rutas->map(function ($ruta) {
+                return [
+                    'id_ruta' => $ruta->id_ruta,
+                    'completado' => $ruta->pivot->completado,
+                ];
+            });
+        } else {
+            $rutasUsuario = [];
+        }
 
         return response()->json([
             'rutas' => $rutas,
             'max_duration' => $maxDuration,
-            'min_duration' => $minDuration
+            'min_duration' => $minDuration,
+            'rutasUsuario' => $rutasUsuario
         ]);
     }
 
@@ -176,11 +187,17 @@ class RutaController extends Controller
 
         $maxDuration = Ruta::where('id_usuario', Auth::user()->id_usuario)->max('duracion');
         $minDuration = Ruta::where('id_usuario', Auth::user()->id_usuario)->min('duracion');
-
+        $rutasUsuario = Auth::user()->rutas->map(function ($ruta) {
+            return [
+                'id_ruta' => $ruta->id_ruta,
+                'completado' => $ruta->pivot->completado,
+            ];
+        });
         return response()->json([
             'rutas' => $rutas,
             'max_duration' => $maxDuration,
-            'min_duration' => $minDuration
+            'min_duration' => $minDuration,
+            'rutasUsuario' => $rutasUsuario
         ]);
     }
 
