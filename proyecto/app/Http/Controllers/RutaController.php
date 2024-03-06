@@ -9,6 +9,7 @@ use App\Models\Ruta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\PersonalAccessToken;
 use PharIo\Manifest\Author;
 
 class RutaController extends Controller
@@ -17,21 +18,25 @@ class RutaController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request){
+        $token = $request->bearerToken();
+        $accessToken = PersonalAccessToken::findToken($token);
+
         $rutas = Ruta::where('publica', true)->get();
 
         $rutas->load(["puntosInteres", "usuario"]);
 
         $maxDuration = Ruta::where('publica', true)->max('duracion');
         $minDuration = Ruta::where('publica', true)->min('duracion');
-        if (Auth::check()) {
-            $rutasUsuario = Auth::user()->rutas->map(function ($ruta) {
+        if ($accessToken) {
+            $usuario = $accessToken->tokenable;
+            $rutasUsuario = $usuario->rutas->map(function ($ruta) {
                 return [
                     'id_ruta' => $ruta->id_ruta,
                     'completado' => $ruta->pivot->completado,
                 ];
             });
 
-            $puntosVisitados = Auth::user()->puntosInteres->map(function ($punto) {
+            $puntosVisitados = $usuario->puntosInteres->map(function ($punto) {
                 return [
                     'id_punto' => $punto->id_punto_interes,
                     'completado' => $punto->pivot->completado,
