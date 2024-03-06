@@ -52,7 +52,7 @@ class User extends Authenticatable
     ];
 
     public function puntosInteres(){
-        return $this->belongsToMany(PuntoInteres::class, 'visita', 'id_usuario', 'id_punto_interes');
+        return $this->belongsToMany(PuntoInteres::class, 'visita', 'id_usuario', 'id_punto_interes')->withPivot('completado');
     }
 
     public function rutas(){

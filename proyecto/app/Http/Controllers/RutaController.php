@@ -30,15 +30,24 @@ class RutaController extends Controller
                     'completado' => $ruta->pivot->completado,
                 ];
             });
+
+            $puntosVisitados = Auth::user()->puntosInteres->map(function ($punto) {
+                return [
+                    'id_punto' => $punto->id_punto_interes,
+                    'completado' => $punto->pivot->completado,
+                ];
+            });
         } else {
             $rutasUsuario = [];
+            $puntosVisitados = [];
         }
 
         return response()->json([
             'rutas' => $rutas,
             'max_duration' => $maxDuration,
             'min_duration' => $minDuration,
-            'rutasUsuario' => $rutasUsuario
+            'rutasUsuario' => $rutasUsuario,
+            'puntosVisitados' => $puntosVisitados
         ]);
     }
 
@@ -193,11 +202,20 @@ class RutaController extends Controller
                 'completado' => $ruta->pivot->completado,
             ];
         });
+
+        $puntosVisitados = Auth::user()->puntosInteres->map(function ($punto) {
+            return [
+                'id_punto' => $punto->id_punto_interes,
+                'completado' => $punto->pivot->completado,
+            ];
+        });
+
         return response()->json([
             'rutas' => $rutas,
             'max_duration' => $maxDuration,
             'min_duration' => $minDuration,
-            'rutasUsuario' => $rutasUsuario
+            'rutasUsuario' => $rutasUsuario,
+            'puntosVisitados' => $puntosVisitados
         ]);
     }
 
