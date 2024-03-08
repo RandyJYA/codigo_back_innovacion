@@ -127,8 +127,7 @@ class RutaController extends Controller
 
         $request->imagen->move(public_path('imagenes'), $imageName);
 
-        $imageUrl = '/imagenes/' . $imageName;
-
+        $imageUrl = url('imagenes/' . $imageName);
         // Verificar si la ruta existe
         if (!$ruta) {
             return response()->json(['message' => 'Ruta no encontrada'], 404);

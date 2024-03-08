@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/rutas', [RutaController::class, 'index']);
 Route::get('rutas/{ruta}/puntosInteres', [RutaController::class, 'puntosRuta']);
 Route::get('puntoInteres/{id}', [PuntoInteresController::class, 'show']);
+Route::get('puntosInteres', [PuntoInteresController::class, 'index']);
+
 
 
 Route::middleware(['auth:sanctum'])->group(function (){
