@@ -6,6 +6,8 @@ use App\Http\Resources\PuntoInteresResource;
 use App\Models\PuntoInteres;
 use Illuminate\Http\Request;
 
+
+
 class PuntoInteresController extends Controller
 {
     /**
@@ -29,8 +31,9 @@ class PuntoInteresController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
+    {   
+        $punto = PuntoInteres::findOrFail($id)->load(['trabajos', 'categorias']);
+        return new PuntoInteresResource($punto);
     }
 
     /**
