@@ -23,7 +23,7 @@ class Ruta extends Model{
     ];
 
     public function puntosInteres(){
-        return $this->belongsToMany(PuntoInteres::class, 'formado', 'id_ruta', 'id_punto_interes');
+        return $this->belongsToMany(PuntoInteres::class, 'formado', 'id_ruta', 'id_punto_interes')->with('categorias');
     }
 
     public function usuarios(){
