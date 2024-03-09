@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PuntoInteresResource;
 use App\Models\PuntoInteres;
 use Illuminate\Http\Request;
-
+use Laravel\Sanctum\PersonalAccessToken;
 
 
 class PuntoInteresController extends Controller
@@ -13,10 +13,28 @@ class PuntoInteresController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $token = $request->bearerToken();
+        $accessToken = PersonalAccessToken::findToken($token);
         $puntos = PuntoInteres::all()->load(['trabajos', 'categorias']);
-        return new PuntoInteresResource($puntos);
+
+        if ($accessToken) {
+            $usuario = $accessToken->tokenable;
+            $puntosVisitados = $usuario->puntosInteres->map(function ($punto) {
+                return [
+                    'id_punto' => $punto->id_punto_interes,
+                    'completado' => $punto->pivot->completado,
+                ];
+            });
+        } else {
+            $puntosVisitados = [];
+        }
+
+        return response()->json([
+            'puntos' => $puntos,
+            'puntosVisitados' => $puntosVisitados
+        ]);
     }
 
     /**
@@ -31,7 +49,7 @@ class PuntoInteresController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {   
+    {
         $punto = PuntoInteres::findOrFail($id)->load(['trabajos', 'categorias']);
         return new PuntoInteresResource($punto);
     }
