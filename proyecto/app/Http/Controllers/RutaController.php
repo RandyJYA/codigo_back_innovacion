@@ -125,9 +125,9 @@ class RutaController extends Controller
 
         $imageName = time().'.'.$request->imagen->extension();
 
-        $request->imagen->move(public_path('imagenes'), $imageName);
+        $request->imagen->move(public_path('rutas'), $imageName);
 
-        $imageUrl = url('ruta/' . $imageName);
+        $imageUrl = 'rutas/' . $imageName;
         // Verificar si la ruta existe
         if (!$ruta) {
             return response()->json(['message' => 'Ruta no encontrada'], 404);
@@ -171,6 +171,14 @@ class RutaController extends Controller
         else{
             $datos = $request->all();
             $ruta->update($datos);
+
+            $ruta->puntosInteres()->detach();
+            if (isset($datos['puntos_interes'])) {
+                foreach ($datos['puntos_interes'] as $puntoInteres) {
+                    $ruta->puntosInteres()->attach($puntoInteres);
+                }
+            }
+
             return new RutaUpdateRequest((array)$ruta);
         }
 
