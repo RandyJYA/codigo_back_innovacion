@@ -48,10 +48,27 @@ class PuntoInteresController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
+        $token = $request->bearerToken();
+        $accessToken = PersonalAccessToken::findToken($token);
         $punto = PuntoInteres::findOrFail($id)->load(['trabajos', 'categorias']);
-        return new PuntoInteresResource($punto);
+
+        if ($accessToken) {
+            $usuario = $accessToken->tokenable;
+            $puntosVisitados = $usuario->puntosInteres->map(function ($punto) {
+                return [
+                    'id_punto' => $punto->id_punto_interes,
+                    'completado' => $punto->pivot->completado,
+                ];
+            });
+        } else {
+            $puntosVisitados = [];
+        }
+        return response()->json([
+            'punto' => $punto,
+            'puntosVisitados' => $puntosVisitados
+        ]);
     }
 
     /**
