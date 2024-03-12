@@ -52,7 +52,7 @@ class PuntoInteresController extends Controller
     {
         $token = $request->bearerToken();
         $accessToken = PersonalAccessToken::findToken($token);
-        $punto = PuntoInteres::findOrFail($id)->load(['trabajos', 'categorias']);
+        $punto = PuntoInteres::findOrFail($id)->load(['trabajos','trabajos.categorias' ,'categorias']);
 
         if ($accessToken) {
             $usuario = $accessToken->tokenable;

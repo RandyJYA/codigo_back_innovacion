@@ -9,7 +9,7 @@ class CategoriaTrabajo extends Model{
     use HasFactory;
 
     protected $table = "categorias_trabajos";
-    protected $primaryKey = "id_categoraT";
+    protected $primaryKey = "id_categoriaT";
     public $timestamps = false;
 
     protected $fillable = [
